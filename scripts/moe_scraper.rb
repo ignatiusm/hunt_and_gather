@@ -3,8 +3,6 @@ require 'open-uri'
 
 def scraper
 
-	output = {}
-
 	doc = Nokogiri::HTML(open("http://www.education.govt.nz/our-work/consultations/open-consultations"))
 	
 	consultations = doc.css("main#main-content p").css("p:not(.updated-feedback)")
@@ -24,14 +22,16 @@ def scraper
 		
 		about = consult.css("p.intro").text
 
-		
-		output[title.to_sym] = {
+		data = {}
+		data = {
+			:title => title.strip,			
 			:department => department,
 			:closing_date => closing_date,
-			:about => about,
+			:about => about.strip,
 
 			:url => url
 		}
+		Consultation.where(department: department, title: title).first_or_create!(data)
 
 	end
 	rescue => e
@@ -42,9 +42,6 @@ def scraper
 			puts "Couldn't connect"
 		end
 	end
-	binding.pry
-	output
-	
 end
 
 scraper

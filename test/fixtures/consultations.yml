@@ -1,0 +1,15 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  department: 
+  title: MyText
+  closing_date: 2019-09-08
+  about: MyText
+  url: MyText
+
+two:
+  department: 
+  title: MyText
+  closing_date: 2019-09-08
+  about: MyText
+  url: MyText

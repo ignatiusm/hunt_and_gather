@@ -1,2 +1,31 @@
+<head>
+  <%= stylesheet_link_tag "http://maxcdn.bootstrapcdn.com/bootstrap/3.4.0/css/bootstrap.min.css" %>
+</head>
+
 <h1>NZ Government Open Consultations</h1>
+
 <p>We've gathered up information on all the open consultations that we could find. See them all below.</p>
+
+<% data = Consultation.where.not(title: [nil, ""]) %>
+
+
+<table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
+  <thead>
+    <tr>
+      <th class="th-sm">Department
+      </th>
+      <th class="th-sm">Title
+      </th>
+      <th class="th-sm">Closing date
+      </th>
+    </tr>
+  </thead>
+  <tbody>
+  <% data.each do |c| %>
+    <tr>
+	    <td><%= c[:department] %></td>
+	    <td><%= c[:title] %></td>
+	    <td><%= c[:closing_date] %></td>
+    </tr>
+  <% end %>
+</table>

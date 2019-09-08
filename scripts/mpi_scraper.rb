@@ -3,8 +3,6 @@ require 'open-uri'
 
 def scraper
 
-	output = {}
-
 	doc = Nokogiri::HTML(open("https://www.mpi.govt.nz/news-and-resources/consultations/?opened=1"))
 	
 	consultations = doc.css("article.media-release.consultation-category.consultationArticle")
@@ -16,7 +14,9 @@ def scraper
 		closing_date = c.css("dd.date").children.text
 		about = c.css("div.article-abstract p").children.text
 		url = c.css("h2.consultationArticle__title a")[0]["href"]
-		output[title.to_sym] = {
+		data = {}
+		data = { 
+			:title => title,
 			:department => department,
 			:closing_date => closing_date,
 			:about => about,
@@ -24,10 +24,10 @@ def scraper
 			:url => url
 		}
 
-	end
-	binding.pry
-	output
-	
+		Consultation.where(department: department, title: title).first_or_create!(data)
+
+
+	end	
 end
 
 scraper
