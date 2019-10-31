@@ -6,8 +6,7 @@
 
 <p>We've gathered up information on all the open consultations that we could find. See them all below.</p>
 
-<% data = Consultation.where.not(title: [nil, ""]) %>
-
+<% data = Consultation.where.not(title: [nil, ""]).order(:closing_date) %>
 
 <table id="dtBasicExample" class="table table-striped table-bordered table-sm" cellspacing="0" width="100%">
   <thead>
@@ -15,6 +14,8 @@
       <th class="th-sm">Department
       </th>
       <th class="th-sm">Title
+      </th>
+      <th class="th-sm">Summary
       </th>
       <th class="th-sm">Closing date
       </th>
@@ -24,7 +25,8 @@
   <% data.each do |c| %>
     <tr>
 	    <td><%= c[:department] %></td>
-	    <td><%= c[:title] %></td>
+      <td onclick="location.href='<%= c[:url] %>'"><%= c[:title] %></td>
+	    <td><%= c[:about] %></td>
 	    <td><%= c[:closing_date] %></td>
     </tr>
   <% end %>
